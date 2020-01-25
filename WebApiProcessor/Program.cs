@@ -15,34 +15,77 @@ namespace WebApiProcessor
         {
             try
             {
-                string response = await client.GetStringAsync("https://jsonplaceholder.typicode.com/comments");
+                // Fetch JSON from API
+                string fetchedComments = await client.GetStringAsync("https://jsonplaceholder.typicode.com/comments");
+                string fetchedPosts = await client.GetStringAsync("https://jsonplaceholder.typicode.com/posts");
+                string fetchedUsers = await client.GetStringAsync("https://jsonplaceholder.typicode.com/users");
 
-                JArray commentArray = JsonConvert.DeserializeObject<dynamic>(response);
+                // Deserializes JSON into JArray
+                JArray commentArray = JsonConvert.DeserializeObject<dynamic>(fetchedComments);
+                JArray postArray = JsonConvert.DeserializeObject<dynamic>(fetchedPosts);
+                JArray userArray = JsonConvert.DeserializeObject<dynamic>(fetchedUsers);
 
                 List<Comment> comments = new List<Comment>();
+                List<Post> posts = new List<Post>();
+                List<User> users = new List<User>();
 
-                foreach(var comment in commentArray)
+                Console.WriteLine("What would you like to query?\n1. Users\n2. Posts\n3. Comments");
+                int option = int.Parse(Console.ReadLine());
+
+                switch (option)
                 {
-                    try
-                    {
-                        Comment newComment = new Comment();
+                    case 1:
+                        foreach(var user in userArray)
+                        {
+                            User newUser = new User();
+
+                            JsonConvert.PopulateObject(user.ToString(), newUser);
+
+                            users.Add(newUser);
+                        }
+
+                        CustomQuery.QueryUsers(users);
+                        break;
+
+                    case 2:
+                        foreach(var post in postArray)
+                        {
+                            Post newPost = new Post();
+
+                            JsonConvert.PopulateObject(post.ToString(), newPost);
+
+                            posts.Add(newPost);
+                        }
+
+                        CustomQuery.QueryPosts(posts);
+                        break;
+
+                    case 3:
+                        foreach(var comment in commentArray)
+                        {
+                            Comment newComment = new Comment();
+
+                            JsonConvert.PopulateObject(comment.ToString(), newComment);
+
+                            comments.Add(newComment);
+
+                        }
                         
-                        JsonConvert.PopulateObject(comment.ToString(), newComment);
+                        CustomQuery.QueryComments(comments);
+                        break;
 
-                        comments.Add(newComment);
-                    }
-                    catch(Exception ex)
-                    {
-                        Console.WriteLine($"Exception Caught!\n{ex.Message}");
-                    }
+                    default:
+                        Console.WriteLine("Please enter a valid entry.");
+                        break;
                 }
-
-                // Test Query
-                CustomQuery.Query(comments);
             }
             catch (HttpRequestException ex)
             {
-                Console.WriteLine($"Exception Caught!\nMessage : {ex.Message}");
+                Console.WriteLine($"Exception Caught!\n{ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception Caught!\n{ex.Message}");
             }
         }
     }
