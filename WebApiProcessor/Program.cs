@@ -77,7 +77,6 @@ namespace WebApiProcessor
                             JsonConvert.PopulateObject(comment.ToString(), newComment);
 
                             comments.Add(newComment);
-
                         }
                         
                         query = CustomQuery.Query(comments);
