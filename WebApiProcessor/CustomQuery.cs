@@ -4,7 +4,6 @@ using System.Linq;
 
 namespace WebApiProcessor
 {
-
     public class CustomQuery
     {
         public static IEnumerable<dynamic> Query(IEnumerable<dynamic> someList)
