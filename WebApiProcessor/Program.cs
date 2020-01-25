@@ -44,7 +44,11 @@ namespace WebApiProcessor
                             users.Add(newUser);
                         }
 
-                        CustomQuery.QueryUsers(users);
+                        var query = CustomQuery.Query(users);
+
+                        foreach (var user in query)
+                            Console.WriteLine($"Name: {user.Name}\nUsername: {user.UserName}\nAddress:\nStreet: {user.Address.Street}\n" +
+                                $"Suite: {user.Address.Suite}\nCity: {user.Address.City}\nZip: {user.Address.ZipCode}");
                         break;
 
                     case 2:
@@ -57,7 +61,11 @@ namespace WebApiProcessor
                             posts.Add(newPost);
                         }
 
-                        CustomQuery.QueryPosts(posts);
+                        query = CustomQuery.Query(posts);
+
+                        foreach (var post in query)
+                            Console.WriteLine($"Title: {post.Title}\nPost: {post.Body}\n");
+
                         break;
 
                     case 3:
@@ -71,7 +79,11 @@ namespace WebApiProcessor
 
                         }
                         
-                        CustomQuery.QueryComments(comments);
+                        query = CustomQuery.Query(comments);
+
+                        foreach (var comment in query)
+                            Console.WriteLine($"\nName: {comment.Name}\nEmail: {comment.Email}\nComment: {comment.Body}");
+
                         break;
 
                     default:
