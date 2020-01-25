@@ -29,7 +29,7 @@ namespace WebApiProcessor
                 List<Post> posts = new List<Post>();
                 List<User> users = new List<User>();
 
-                Console.WriteLine("What would you like to query?\n1. Users\n2. Posts\n3. Comments");
+                Console.WriteLine("What would you like to query?\n   1. Users\n   2. Posts\n   3. Comments");
                 int option = int.Parse(Console.ReadLine());
 
                 switch (option)
@@ -49,6 +49,7 @@ namespace WebApiProcessor
                         foreach (var user in query)
                             Console.WriteLine($"Name: {user.Name}\nUsername: {user.UserName}\nAddress:\nStreet: {user.Address.Street}\n" +
                                 $"Suite: {user.Address.Suite}\nCity: {user.Address.City}\nZip: {user.Address.ZipCode}");
+
                         break;
 
                     case 2:
