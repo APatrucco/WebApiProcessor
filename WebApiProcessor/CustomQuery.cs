@@ -8,10 +8,10 @@ namespace WebApiProcessor
     {
         public static IEnumerable<dynamic> Query(IEnumerable<dynamic> someList)
         {
-            Console.WriteLine("Please enter ID: ");
+            Console.WriteLine("Please enter user ID: ");
             int inputID = int.Parse(Console.ReadLine());
 
-            var query = from dynamic item in someList
+            dynamic query = from dynamic item in someList
                             where item.ID.Equals(inputID)
                             select item;
 
